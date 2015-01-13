@@ -1,0 +1,28 @@
+body
+{
+  width: 70%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.message
+{
+/*  clear: both;*/
+  
+  float: left;
+  
+  border-bottom: solid thin black;
+  border-left: solid thin black;
+  border-right: solid thin black;
+  
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.content
+{
+  position: absolute;
+  left: 15%;
+  display: block;
+  z-index: -1;
+}
