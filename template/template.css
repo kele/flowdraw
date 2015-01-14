@@ -5,24 +5,36 @@ body
   margin-right: auto;
 }
 
-.message
+table
 {
-/*  clear: both;*/
+  padding: 0px;
+  border-collapse: collapse;
+}
+td
+{
   
-  float: left;
-  
-  border-bottom: solid thin black;
-  border-left: solid thin black;
-  border-right: solid thin black;
-  
-  padding-left: 20px;
-  padding-right: 20px;
+  padding: 5px;
+  text-align: center;
+  background-image: url('./bg.png');
+  background-position: center;
+  background-repeat: repeat-y;
+  margin: 0px;
+  border: 0px;
 }
 
-.content
+tr
 {
-  position: absolute;
-  left: 15%;
+  border: 0px;
+  margin: 0px;
+}
+
+td.message
+{
+  background: none;
+}
+
+.message_canvas
+{
   display: block;
-  z-index: -1;
+  clear: both;
 }
