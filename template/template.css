@@ -3,13 +3,18 @@ body
   width: 70%;
   margin-left: auto;
   margin-right: auto;
+  font-family: Monospace;
+  font-size: 9pt;
 }
 
 table
 {
+  margin-left: auto;
+  margin-right: auto;
   padding: 0px;
   border-collapse: collapse;
 }
+
 td
 {
   
