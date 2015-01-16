@@ -3,8 +3,13 @@ body
   width: 70%;
   margin-left: auto;
   margin-right: auto;
-  font-family: Monospace;
-  font-size: 9pt;
+  font-family: Georgia;
+  font-size: 8pt;
+}
+
+div
+{
+  display: inline-block;
 }
 
 table
@@ -17,20 +22,20 @@ table
 
 td
 {
-  
-  padding: 5px;
+  padding-top: 5px;
+  padding-bottom: 5px;
   text-align: center;
   background-image: url('./bg.png');
   background-position: center;
   background-repeat: repeat-y;
-  margin: 0px;
-  border: 0px;
+  margin: 0;
+  border: 0;
 }
 
 tr
 {
-  border: 0px;
-  margin: 0px;
+  border: 0;
+  margin: 0;
 }
 
 td.message
