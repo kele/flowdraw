@@ -13,6 +13,16 @@
         @found "What", -> @message "3. hej!", "Member1"
         @found "What", -> @message "4. hej!", "Member1"
         @found "Someone", -> @message "5. lolzxczxc", "What"
+        @found "Someone", -> @message "5. lolzxczxc", "What1"
+        @found "Someone", -> @message "5. lolzxczxc", "What2"
+        @found "Someone", -> @message "5. lolzxczxc", "What3"
+        @found "Someone", -> @message "5. lolzxczxc", "What4"
+        @found "Someone", -> @message "5. lolzxczxc", "What5"
+        @found "Someone", -> @message "5. lolzxczxc", "What6"
+        @found "Someone", -> @message "5. lolzxczxc", "What7"
+        @found "Someone", -> @message "5. lolzxczxc", "What8"
+        @found "Someone", -> @message "5. lolzxczxc", "What9"
+        @found "Someone", -> @message "5. lolzxczxc", "What10"
         @found "Member1", -> @message "hej", "Someone"
     </script>
 
@@ -74,11 +84,23 @@
                 $("div.handle").dblclick(function() {
                     $(this).parent().remove();
                 });
-            });
 
+            });
 
             clearOccurrences();
             putParticipantsOnTop();
+
+            var participants = []
+            $("div.participant").each(function () {
+                var name = this.firstChild.firstChild.data;
+                participants.push(name);
+            });
+
+            var i = 0;
+            $("div.lifeline").each(function () {
+                this.title = participants[i];
+                i++;
+            });
         }
 
         setTimeout(main, 100);
