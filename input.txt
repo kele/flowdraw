@@ -1,0 +1,10 @@
+UEC --> CELLC | x | y
+UEC --> CELLC | x | y
+UEC --> CELLC | x | y
+UEC --> CELLC | x | y
+UEC --> CELLC | x | y
+UEC --> AMDLKMALD | asdas | yasd as
+UEC --> AMDLKMALD | asdas | yasd as
+UEC --> AMDLKMALD | asdas | yasd as
+UEC --> AMDLKMALD | asdas | yasd as
+UEC --> AMDLKMALD | asdas | yasd as
