@@ -10,6 +10,8 @@
     <script src="js/flowdraw.js"></script>
 </head>
 <body>
+    <p>Help: click on message type to display content. Move popup by dragging the gray handle. Close it by double clicking the handle.</p>
+
     {{message_sequence}}
 
     <div id="diagram"></div>
