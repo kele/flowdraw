@@ -1,1 +1,1 @@
-@found {{sender}}, -> @message {{message_type}}, {{receiver}}
+{{sender}}->{{receiver}}: {{message_type}}

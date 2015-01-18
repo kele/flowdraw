@@ -1,0 +1,207 @@
+<!doctype html>
+<head>
+    <meta charset='utf-8'/>
+    <script src="jquery-2.0.0.min.js"></script>
+    <script src="jquery-ui.min.js"></script>
+    <script src="underscore-min.js"></script>
+    <script src="raphael-min.js"></script>
+    <script src="sequence-diagram-min.js"></script>
+</head>
+<body>
+    <pre id="raw_diagram" style="display: none;">
+    COMPO->WORLD: 1.datkmaksdlalskdals
+
+    MOSQUITO->COMPO: 2.MOSQUITO_TO_COMPO_SMTTTT
+
+    MAC->WORLD: 3.something
+
+    COMPO->LOLX: 4.asldmasd
+
+    AMSDKL->MMM: 5.asd
+
+    COMPO->WORLD: 1.datkmaksdlalskdals
+
+    MOSQUITO->COMPO: 2.MOSQUITO_TO_COMPO_SMTTTT
+
+    MAC->WORLD: 3.something
+
+    COMPO->LOLX: 4.asldmasd
+
+    AMSDKL->MMM: 5.asd
+
+    COMPO->WORLD: 1.datkmaksdlalskdals
+
+    MOSQUITO->COMPO: 2.MOSQUITO_TO_COMPO_SMTTTT
+
+    MAC->WORLD: 3.something
+
+    COMPO->LOLX: 4.asldmasd
+
+    AMSDKL->MMM: 5.asd
+
+    COMPO->WORLD: 1.datkmaksdlalskdals
+
+    MOSQUITO->COMPO: 2.MOSQUITO_TO_COMPO_SMTTTT
+
+    MAC->WORLD: 3.something
+
+    COMPO->LOLX: 4.asldmasd
+
+    AMSDKL->MMM: 5.asd
+
+    COMPO->WORLD: 1.datkmaksdlalskdals
+
+    MOSQUITO->COMPO: 2.MOSQUITO_TO_COMPO_SMTTTT
+
+    MAC->WORLD: 3.something
+
+    COMPO->LOLX: 4.asldmasd
+
+    AMSDKL->MMM: 5.asd
+
+    COMPO->WORLD: 1.datkmaksdlalskdals
+
+    MOSQUITO->COMPO: 2.MOSQUITO_TO_COMPO_SMTTTT
+
+    MAC->WORLD: 3.something
+
+    COMPO->LOLX: 4.asldmasd
+
+    AMSDKL->MMM: 5.asd
+
+    COMPO->WORLD: 1.datkmaksdlalskdals
+
+    MOSQUITO->COMPO: 2.MOSQUITO_TO_COMPO_SMTTTT
+
+    MAC->WORLD: 3.something
+
+    COMPO->LOLX: 4.asldmasd
+
+    AMSDKL->MMM: 5.asd
+
+    COMPO->WORLD: 1.datkmaksdlalskdals
+
+    MOSQUITO->COMPO: 2.MOSQUITO_TO_COMPO_SMTTTT
+
+    MAC->WORLD: 3.something
+
+    COMPO->LOLX: 4.asldmasd
+
+    AMSDKL->MMM: 5.asd
+
+    COMPO->WORLD: 1.datkmaksdlalskdals
+
+    MOSQUITO->COMPO: 2.MOSQUITO_TO_COMPO_SMTTTT
+
+    MAC->WORLD: 3.something
+
+    COMPO->LOLX: 4.asldmasd
+
+    AMSDKL->MMM: 5.asd
+
+    COMPO->WORLD: 1.datkmaksdlalskdals
+
+    MOSQUITO->COMPO: 2.MOSQUITO_TO_COMPO_SMTTTT
+
+    MAC->WORLD: 3.something
+
+    COMPO->LOLX: 4.asldmasd
+
+    AMSDKL->MMM: 5.asd
+
+    COMPO->WORLD: 1.datkmaksdlalskdals
+
+    MOSQUITO->COMPO: 2.MOSQUITO_TO_COMPO_SMTTTT
+
+    MAC->WORLD: 3.something
+
+    COMPO->LOLX: 4.asldmasd
+
+    AMSDKL->MMM: 5.asd
+
+    COMPO->WORLD: 1.datkmaksdlalskdals
+
+    MOSQUITO->COMPO: 2.MOSQUITO_TO_COMPO_SMTTTT
+
+    MAC->WORLD: 3.something
+
+    COMPO->LOLX: 4.asldmasd
+
+    AMSDKL->MMM: 5.asd
+
+    COMPO->WORLD: 1.datkmaksdlalskdals
+
+    MOSQUITO->COMPO: 2.MOSQUITO_TO_COMPO_SMTTTT
+
+    MAC->WORLD: 3.something
+
+    COMPO->LOLX: 4.asldmasd
+
+    AMSDKL->MMM: 5.asd
+
+</pre>
+
+
+    <div id="diagram"></div>
+
+    <script type='text/javascript'>
+        var messageContents = ["xxx"];
+
+        function main()
+        {
+            var diagram = Diagram.parse(document.getElementById('raw_diagram').innerText);
+            diagram.drawSVG("diagram", {theme: 'simple'});
+
+            $("tspan").click(function(event) {
+                var messageText = this.firstChild.data;
+                var msgId = parseInt(messageText);
+                if (isNaN(msgId))
+                {
+                    return;
+                }
+                msgId--;
+
+                console.log(event);
+
+                var x = event.pageX;
+                var y = event.pageY;
+
+                var message = "<strong>" + messageText + "</strong><br><pre style=\"font-size: 8pt;\">" + messageContents[msgId] + "</pre>";
+                var div_style = "position: absolute;";
+                div_style += "top: " + y + "px;";
+                div_style += "left: " + x + "px;";
+                div_style += "border: 1px black solid;";
+                div_style += "z-index: 100;";
+                div_style += "background: rgba(255, 255, 255, 1);";
+                div_style += "font-size: 9pt;";
+                div_style += "font-family: Monospace;";
+                div_style += "padding: 0;";
+
+                var handle = "<div class=\"handle\" style=\"width: 100%; height: 10px; margin: 0; padding:0; position: relative; background: lightgray;\"></div><br>";
+
+                var div = "<div class=\"dragthis\" id=\"msg_" + msgId + "\" style=\"" + div_style + "\"> " + handle + "<div style=\"padding: 0 5px;\">" + message + "</div></div>";
+                $("body").append(div);
+                $("div.dragthis").draggable({ handle: "div.handle"});
+
+                $("div.handle").dblclick(function() {
+                    $(this).parent().remove();
+                });
+
+                $("path").each(function() {
+                    console.log(this);
+                });
+            });
+
+            $("text").each(function() {
+                this.style.fontSize = "9pt";
+            });
+        }
+
+        setTimeout(main, 100);
+        
+    </script>
+
+</body>
+
+</html>
+

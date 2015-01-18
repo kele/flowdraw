@@ -21,11 +21,21 @@ class OutputGenerator:
             for line in file:
                 messages.append(parseLine(line))
 
-        msgs_out = []
-        for msg in messages:
-            out = re.sub("\{\{sender\}\}", msg.sender, self.msg_template)
-            out = re.sub("\{\{message_type\}\}", msg.type, out)
-            out = re.sub("\{\{receiver\}\}", msg.receiver, out)
-            msgs_out.append(out)
+        msgs_out = [self.generateMessage(msg) for msg in messages]
+        msgs_out = '\n    '.join(msgs_out)
+
+        message_seq = re.sub("\{\{message\.\.\.\}\}", msgs_out, self.msg_seq_template)
+        main = re.sub("\{\{message_sequence\}\}", message_seq, self.main_template)
+        main = re.sub("\{\{message_contents\}\}", "\"xxx\"", main)
+
+        return main
+
+
+    def generateMessage(self, msg):
+        out = re.sub("\{\{sender\}\}", msg.sender, self.msg_template)
+        out = re.sub("\{\{message_type\}\}", msg.type, out)
+        out = re.sub("\{\{receiver\}\}", msg.receiver, out)
+        return out
+
 
 
