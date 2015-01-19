@@ -10,41 +10,26 @@ function main()
         {
             return;
         }
-        msgId--;
 
         var x = event.pageX;
         var y = event.pageY;
 
-        var message = "<strong>" 
-                        + messageText 
-                        + "</strong><br><pre style=\"font-size: 8pt;\">" 
-                        + messageContents[msgId] 
-                        + "</pre>";
-
-        var div_style = "position: absolute;";
-        div_style += "top: " + y + "px;";
-        div_style += "left: " + x + "px;";
-
-        var handle = "<div class=\"handle\"></div><br>";
-
-        var div = "<div class=\"popup\" style=\""
-                    + div_style 
-                    + "\"> " 
-                    + handle 
-                    + "<div class=\"popup_content\">" 
-                    + message 
-                    + "</div></div>";
-
-        $("body").append(div);
-        $("div.popup").draggable({ handle: "div.handle", stack: "div.popup"});
-
-        $("div.handle").dblclick(function() {
-            $(this).parent().remove();
-        });
+        console.log(event);
+        $("div#msg_" + msgId)
+            .toggle()
+            .css("position", "absolute")
+            .css("top", y + "px")
+            .css("left", x + "px");
     });
 
     $("text").each(function() {
         this.style.fontSize = "9pt";
+    });
+
+    $("div.popup").draggable({ handle: "div.handle", stack: "div.popup"});
+
+    $("div.handle").dblclick(function() {
+        $(this).parent().toggle();
     });
 }
 

@@ -12,13 +12,13 @@
 <body>
     <p>Help: click on message type to display content. Move popup by dragging the gray handle. Close it by double clicking the handle.</p>
 
-    {{message_sequence}}
+    <pre id="raw_diagram" style="display: none;">
+        {{message...}}
+    </pre>
 
     <div id="diagram"></div>
-    <script type="text/javascript">
-        var messageContents = [{{message_contents}}];
-    </script>
 
+    {{message_content...}}
 
 </body>
 

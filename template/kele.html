@@ -1,0 +1,92 @@
+<!doctype html>
+<head>
+    <meta charset='utf-8'/>
+    <link rel="stylesheet" type="text/css" href="flowdraw.css" />
+    <script src="js/jquery-2.0.0.min.js"></script>
+    <script src="js/jquery-ui.min.js"></script>
+    <script src="js/underscore-min.js"></script>
+    <script src="js/raphael-min.js"></script>
+    <script src="js/sequence-diagram-min.js"></script>
+    <script src="js/flowdraw.js"></script>
+</head>
+<body>
+    <p>Help: click on message type to display content. Move popup by dragging the gray handle. Close it by double clicking the handle.</p>
+
+    <pre id="raw_diagram" style="display: none;">
+        Jane->Bob: 1. Hi
+
+	Bob->Jane: 2. Hi
+
+	Jane->Bob: 3. Gentle response
+
+	Bob->Jane: 4. Brag
+
+	Jane->Anna: 5. Text
+
+    </pre>
+
+    <div id="diagram"></div>
+
+    <div id="msg_1" class="popup" style="display: none;">
+    <div class="handle"></div><br>
+    <strong style="padding: 5px;">1. Hi</strong>
+    <br>
+    <div class="popup_content">
+<pre>Hi!
+</pre>
+    </div>
+</div>
+
+	<div id="msg_2" class="popup" style="display: none;">
+    <div class="handle"></div><br>
+    <strong style="padding: 5px;">2. Hi</strong>
+    <br>
+    <div class="popup_content">
+<pre>Hi! How are you?
+</pre>
+    </div>
+</div>
+
+	<div id="msg_3" class="popup" style="display: none;">
+    <div class="handle"></div><br>
+    <strong style="padding: 5px;">3. Gentle response</strong>
+    <br>
+    <div class="popup_content">
+<pre>I'm fine, thanks
+;-)
+</pre>
+    </div>
+</div>
+
+	<div id="msg_4" class="popup" style="display: none;">
+    <div class="handle"></div><br>
+    <strong style="padding: 5px;">4. Brag</strong>
+    <br>
+    <div class="popup_content">
+<pre>This is a
+multine
+reallyreallymultine
+	message
+	even with some
+	real
+		tabs!!! :D
+</pre>
+    </div>
+</div>
+
+	<div id="msg_5" class="popup" style="display: none;">
+    <div class="handle"></div><br>
+    <strong style="padding: 5px;">5. Text</strong>
+    <br>
+    <div class="popup_content">
+<pre>Text content:
+	I'm talking with Bob right now.
+</pre>
+    </div>
+</div>
+
+
+</body>
+
+</html>
+

@@ -5,35 +5,41 @@ import re
 
 class OutputGenerator:
     def __init__(self, template_folder):
-        with open(template_folder + "/main.template") as main_file:
-            self.main_template = ''.join(main_file.readlines())
+        # TODO: find a better way to do this
+        with open(template_folder + "/main.template") as file:
+            self.main_template = ''.join(file.readlines())
 
-        with open(template_folder + "/message_sequence.template") as msg_seq_file:
-            self.msg_seq_template = ''.join(msg_seq_file.readlines())
+        with open(template_folder + "/message.template") as file:
+            self.msg_template = ''.join(file.readlines())
 
-        with open(template_folder + "/message.template") as msg_file:
-            self.msg_template = ''.join(msg_file.readlines())
+        with open(template_folder + "/message_content.template") as file:
+            self.msg_content_template = ''.join(file.readlines())
 
     def generate(self, inputfilename):
-        messages = []
-
         with open(inputfilename) as file:
-            for line in file:
-                messages.append(parseLine(line))
+            parsedMsgs = [parseLine(line) for line in file]
 
-        msgs_out = [self.generateMessage(msg) for msg in messages]
-        msgs_out = '\n    '.join(msgs_out)
+        messages = [self.generateMessage(msg, index + 1) for index, msg in enumerate(parsedMsgs)]
+        contents = [self.generateContent(msg, index + 1) for index, msg in enumerate(parsedMsgs)]
 
-        message_seq = re.sub("\{\{message\.\.\.\}\}", msgs_out, self.msg_seq_template)
-        main = re.sub("\{\{message_sequence\}\}", message_seq, self.main_template)
-        main = re.sub("\{\{message_contents\}\}", "\"xxx\"", main)
+        main = self.main_template
+        main = re.sub("\{\{message\.\.\.\}\}", r'\n\t'.join(messages), main)
+        main = re.sub("\{\{message_content\.\.\.\}\}", r'\n\t'.join(contents), main)
+
 
         return main
 
+    def generateContent(self, msg, index):
+        out = self.msg_content_template
+        out = re.sub("\{\{msg_id\}\}", str(index), out)
+        out = re.sub("\{\{message_type\}\}", str(index) + ". " + msg.type, out)
+        out = re.sub("\{\{message_content\}\}", msg.content, out)
+        return out
 
-    def generateMessage(self, msg):
-        out = re.sub("\{\{sender\}\}", msg.sender, self.msg_template)
-        out = re.sub("\{\{message_type\}\}", msg.type, out)
+    def generateMessage(self, msg, index):
+        out = self.msg_template
+        out = re.sub("\{\{sender\}\}", msg.sender, out)
+        out = re.sub("\{\{message_type\}\}", str(index) + ". " + msg.type, out)
         out = re.sub("\{\{receiver\}\}", msg.receiver, out)
         return out
 
