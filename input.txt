@@ -1,5 +1,0 @@
-Alice --> Bob | Hi | Hi!
-Bob --> Alice | Hi | Hi! How are you?
-Alice --> Bob | Gentle response | I'm fine, thanks\n;-)
-Bob --> Alice | Brag | This is a\nmultine\nreallyreallymultine\n\tmessage\n\teven with some\n\treal\n\t\ttabs!!! :D
-Alice --> Anna | Text | Text content:\n\tI'm talking with Bob right now.

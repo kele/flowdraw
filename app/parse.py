@@ -10,6 +10,6 @@ class Message:
         self.content = content
 
 def parseLine(line):
-   sender, receiver, type, content = re.match(r"(.+) --> (.+) \| (.+) \| (.+)", line, re.MULTILINE | re.DOTALL).groups()
+   sender, receiver, type, content = re.match(r"(.+) --> (.+) \| (.+) \| (.+)", line).groups()
    return Message(sender, receiver, type, content)
 
