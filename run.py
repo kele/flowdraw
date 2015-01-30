@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 from app.generate import *
+import sys
 
 gen = OutputGenerator("template")
-out = gen.generate("input.txt")
+out = gen.generate(sys.argv)
 print(out)
