@@ -49,7 +49,7 @@ class OutputGenerator:
     def generateContent(self, msg, index):
         out = self.msg_content_template
         out = re.sub("\{\{msg_id\}\}", str(index), out)
-        out = re.sub("\{\{message_type\}\}", str(index) + ". " + msg.type, out)
+        out = re.sub("\{\{message_header\}\}", "%d. %s [%s -> %s]" % (index, msg.type, msg.sender, msg.receiver), out)
         out = re.sub("\{\{message_callstack\}\}", '\n'.join(self.call_stack), out)
         out = re.sub("\{\{message_content\}\}", msg.content, out)
         return out
@@ -57,7 +57,7 @@ class OutputGenerator:
     def generateMessage(self, msg, index):
         out = self.msg_template
         out = re.sub("\{\{sender\}\}", msg.sender, out)
-        out = re.sub("\{\{message_type\}\}", str(index) + ". " + msg.type, out)
+        out = re.sub("\{\{message_type\}\}", "%d. %s" % (index, msg.type), out)
         out = re.sub("\{\{receiver\}\}", msg.receiver, out)
         return out
 
