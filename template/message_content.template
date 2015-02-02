@@ -2,6 +2,11 @@
     <div class="handle"></div><br>
     <strong style="padding: 5px;">{{message_type}}</strong>
     <br>
+    <div class="popup_callstack_button"><strong>Callstack</strong></div>
+    <div class="popup_callstack">
+<pre>{{message_callstack}}</pre>
+    <br>
+    </div>
     <div class="popup_content">
 <pre>{{message_content}}</pre>
     </div>

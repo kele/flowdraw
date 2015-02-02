@@ -15,12 +15,29 @@ class OutputGenerator:
         with open(template_folder + "/message_content.template") as file:
             self.msg_content_template = ''.join(file.readlines())
 
+
     def generate(self, inputfilename):
         with open(inputfilename) as file:
             parsedMsgs = [parseLine(line) for line in file]
 
-        messages = [self.generateMessage(msg, index + 1) for index, msg in enumerate(parsedMsgs)]
-        contents = [self.generateContent(msg, index + 1) for index, msg in enumerate(parsedMsgs)]
+        self.call_stack = []
+        contents = []
+        messages = []
+        msg_index = 1
+        for p in parsedMsgs:
+            if isinstance(p, Message):
+                msg = self.generateMessage(p, msg_index)
+                messages.append(msg)
+
+                content = self.generateContent(p, msg_index)
+                contents.append(content)
+
+                msg_index += 1
+
+            elif isinstance(p, FunctionEnter):
+                self.call_stack.append(str(p))
+            elif isinstance(p, FunctionLeave):
+                self.call_stack.pop()
 
         main = self.main_template
         main = re.sub("\{\{message\.\.\.\}\}", r'\n\t'.join(messages), main)
@@ -33,6 +50,7 @@ class OutputGenerator:
         out = self.msg_content_template
         out = re.sub("\{\{msg_id\}\}", str(index), out)
         out = re.sub("\{\{message_type\}\}", str(index) + ". " + msg.type, out)
+        out = re.sub("\{\{message_callstack\}\}", '\n'.join(self.call_stack), out)
         out = re.sub("\{\{message_content\}\}", msg.content, out)
         return out
 

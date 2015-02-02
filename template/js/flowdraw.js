@@ -26,6 +26,10 @@ function main()
         this.style.fontSize = "9pt";
     });
 
+    $("div.popup_callstack_button").click(function() {
+        $(this).siblings(".popup_callstack").toggle();
+    });
+
     $("div.popup").draggable({ handle: "div.handle", stack: "div.popup"});
 
     $("div.handle").dblclick(function() {
