@@ -9,6 +9,10 @@ class Message:
         self.type = type
         self.content = content
 
+class Note:
+    def __init__(self, content):
+        self.content = content
+
 class FunctionEnter:
     def __init__(self, place, instance):
         self.place = place
@@ -32,6 +36,8 @@ def parseLine(line):
         return parseEnter(line)
     elif line.startswith("leave "):
         return parseLeave(line)
+    elif line.startswith("note "):
+        return Note(line)
     else:
         sender, receiver, type, content = re.match(r"(.+) --> (.+) \| (.+) \| (.+)", line).groups()
         return Message(sender, receiver, type, content)

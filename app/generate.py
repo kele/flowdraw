@@ -34,6 +34,8 @@ class OutputGenerator:
 
                 msg_index += 1
 
+            elif isinstance(p, Note):
+                messages.append(p.content)
             elif isinstance(p, FunctionEnter):
                 self.call_stack.append(str(p))
             elif isinstance(p, FunctionLeave):
