@@ -1,1 +1,1 @@
-{{sender}}->{{receiver}}: {{message_type}}
+diag.addMessage({{msg_id}}, "{{sender}}", "{{receiver}}", "{{message_type}}");

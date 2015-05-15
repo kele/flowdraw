@@ -2,23 +2,28 @@
 <head>
     <meta charset='utf-8'/>
     <link rel="stylesheet" type="text/css" href="flowdraw.css" />
-    <script src="js/jquery-2.0.0.min.js"></script>
-    <script src="js/jquery-ui.min.js"></script>
-    <script src="js/underscore-min.js"></script>
-    <script src="js/raphael-min.js"></script>
-    <script src="js/sequence-diagram-min.js"></script>
-    <script src="js/flowdraw.js"></script>
+    <script src="js/jquery-2.0.0.min.js"></script> 
+    <script src="js/jquery-ui.min.js"></script> 
+    <script src="js/svg.js"></script> 
+    <script src="js/seqdia.js"></script> 
 </head>
 <body>
     <p>Help: click on message type to display content. Move popup by dragging the gray handle. Close it by double clicking the handle.</p>
 
-    <pre id="raw_diagram" style="display: none;">
-        {{message...}}
-    </pre>
+    <div id="diag"></div>
+    <script type="text/javascript" charset="utf-8">
+        var diag = new Diagram();
 
-    <div id="diagram"></div>
+        {{actors...}}
+
+        {{message...}}
+
+        var draw = diag.createDrawing();
+    </script>
 
     {{message_content...}}
+
+    <div id="legend" style="display: none"></div>
 
 </body>
 

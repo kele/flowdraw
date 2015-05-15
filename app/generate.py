@@ -1,6 +1,7 @@
 __author__ = 'kele'
 
 from app.parse import *
+import configuration
 import re
 
 class OutputGenerator:
@@ -15,15 +16,25 @@ class OutputGenerator:
         with open(template_folder + "/message_content.template") as file:
             self.msg_content_template = ''.join(file.readlines())
 
+        with open(template_folder + "/actor.template") as file:
+            self.actor_template = ''.join(file.readlines())
 
     def generate(self, inputfilename):
         with open(inputfilename) as file:
             parsedMsgs = [parseLine(line) for line in file]
 
+        for p in parsedMsgs:
+            p.sender = configuration.simplifyActor(p.sender)
+            p.receiver = configuration.simplifyActor(p.receiver)
+
+        parsedMsgs = filter(configuration.isMsgOk, parsedMsgs)
+
         self.call_stack = []
         contents = []
         messages = []
         msg_index = 1
+
+        actors = set()
         for p in parsedMsgs:
             if isinstance(p, Message):
                 msg = self.generateMessage(p, msg_index)
@@ -33,6 +44,9 @@ class OutputGenerator:
                 contents.append(content)
 
                 msg_index += 1
+
+                actors.add(p.sender)
+                actors.add(p.receiver)
 
             elif isinstance(p, Note):
                 messages.append(p.content)
@@ -45,8 +59,17 @@ class OutputGenerator:
         main = re.sub("\{\{message\.\.\.\}\}", r'\n\t'.join(messages), main)
         main = re.sub("\{\{message_content\.\.\.\}\}", r'\n\t'.join(contents), main)
 
+        actorsStrings = []
+        for a in actors:
+            actorsStrings.append(self.generateActor(a));
+        main = re.sub("\{\{actors...\}\}", r'\n\t'.join(actorsStrings), main)
 
         return main
+
+    def generateActor(self, actor):
+        out = self.actor_template
+        out = re.sub("\{\{actor\}\}", actor, out)
+        return out
 
     def generateContent(self, msg, index):
         out = self.msg_content_template
@@ -59,9 +82,8 @@ class OutputGenerator:
     def generateMessage(self, msg, index):
         out = self.msg_template
         out = re.sub("\{\{sender\}\}", msg.sender, out)
-        out = re.sub("\{\{message_type\}\}", "%d. %s" % (index, msg.type), out)
+        out = re.sub("\{\{msg_id\}\}", str(index), out)
+        out = re.sub("\{\{message_type\}\}", msg.type, out)
         out = re.sub("\{\{receiver\}\}", msg.receiver, out)
         return out
-
-
 
