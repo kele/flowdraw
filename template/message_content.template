@@ -1,6 +1,7 @@
-<div msg_id="{{msg_id}}" class="popup" style="display: none;">
+<div msg_id="{{msg_id}}" class="popup" style="display: none; white-space:nowrap">
     <div class="handle"></div><br>
-    <strong style="padding: 5px;">{{msg_id}}. {{msg_label}} [{{sender}} ({{full_sender}}) -> {{receiver}} ({{full_receiver}})]</strong>
+    <span style="padding: 5px;"><strong>{{msg_id}}. {{msg_label}}</strong></span><br>
+    <span style="padding: 5px;"><strong>[{{sender}} ({{full_sender}}) -> {{receiver}} ({{full_receiver}})]</strong></span>
     <br>
     <div class="popup_callstack_button"><strong>Callstack</strong></div>
     <div class="popup_callstack">

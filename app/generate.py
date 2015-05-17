@@ -49,8 +49,7 @@ class OutputGenerator:
                 actors.add(p.receiver)
 
             elif isinstance(p, Note):
-                pass
-                #messages.append(p.content)
+                pass # TODO
 
             elif isinstance(p, FunctionEnter):
                 self.call_stack.append(str(p))
