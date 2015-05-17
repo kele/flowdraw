@@ -21,13 +21,14 @@ class OutputGenerator:
 
     def generate(self, inputfilename):
         with open(inputfilename) as file:
-            parsedMsgs = [parseLine(line) for line in file]
+            parsedItems = [parseLine(line) for line in file]
 
-        for p in parsedMsgs:
-            p.sender = configuration.simplifyActor(p.sender)
-            p.receiver = configuration.simplifyActor(p.receiver)
+        for p in parsedItems:
+            if isinstance(p, Message):
+                p.sender = configuration.simplifyActor(p.sender)
+                p.receiver = configuration.simplifyActor(p.receiver)
 
-        parsedMsgs = filter(configuration.isMsgOk, parsedMsgs)
+        parsedItems = filter(configuration.isMsgOk, parsedItems)
 
         self.call_stack = []
         contents = []
@@ -35,7 +36,8 @@ class OutputGenerator:
         msg_index = 1
 
         actors = set()
-        for p in parsedMsgs:
+        explicitActors = []
+        for p in parsedItems:
             if isinstance(p, Message):
                 msg = self.generateMessage(p, msg_index)
                 messages.append(msg)
@@ -50,16 +52,25 @@ class OutputGenerator:
 
             elif isinstance(p, Note):
                 messages.append(p.content)
+
             elif isinstance(p, FunctionEnter):
                 self.call_stack.append(str(p))
+
             elif isinstance(p, FunctionLeave):
                 self.call_stack.pop()
+
+            elif isinstance(p, Actor):
+                explicitActors.append(p.actor)
 
         main = self.main_template
         main = re.sub("\{\{message\.\.\.\}\}", r'\n\t'.join(messages), main)
         main = re.sub("\{\{message_content\.\.\.\}\}", r'\n\t'.join(contents), main)
 
         actorsStrings = []
+        for a in explicitActors:
+            actors.discard(a)
+        for a in explicitActors:
+            actorsStrings.append(self.generateActor(a));
         for a in actors:
             actorsStrings.append(self.generateActor(a));
         main = re.sub("\{\{actors...\}\}", r'\n\t'.join(actorsStrings), main)
