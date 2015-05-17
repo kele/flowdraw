@@ -1,11 +1,12 @@
-__author__ = 'kele'
-
 from app.parse import *
-import configuration
+from app.configuration_impl import Prettifyier
+from app.configuration import configuration
 import re
 
 class OutputGenerator:
     def __init__(self, template_folder):
+        self.prettifyier = Prettifyier(configuration)
+
         # TODO: find a better way to do this
         with open(template_folder + "/main.template") as file:
             self.main_template = ''.join(file.readlines())
@@ -23,12 +24,9 @@ class OutputGenerator:
         with open(inputfilename) as file:
             parsedItems = [parseLine(line) for line in file]
 
+        parsedItems = filter(self.prettifyier.isItemOk, parsedItems)
         for p in parsedItems:
-            if isinstance(p, Message):
-                p.sender = configuration.simplifyActor(p.sender)
-                p.receiver = configuration.simplifyActor(p.receiver)
-
-        parsedItems = filter(configuration.isMsgOk, parsedItems)
+            p = self.prettifyier.prettifyItem(p)
 
         self.call_stack = []
         contents = []
@@ -51,7 +49,8 @@ class OutputGenerator:
                 actors.add(p.receiver)
 
             elif isinstance(p, Note):
-                messages.append(p.content)
+                pass
+                #messages.append(p.content)
 
             elif isinstance(p, FunctionEnter):
                 self.call_stack.append(str(p))
@@ -63,8 +62,8 @@ class OutputGenerator:
                 explicitActors.append(p.actor)
 
         main = self.main_template
-        main = re.sub("\{\{message\.\.\.\}\}", r'\n\t'.join(messages), main)
-        main = re.sub("\{\{message_content\.\.\.\}\}", r'\n\t'.join(contents), main)
+        main = re.sub("\{\{msg\.\.\.\}\}", r'\n\t'.join(messages), main)
+        main = re.sub("\{\{msg_content\.\.\.\}\}", r'\n\t'.join(contents), main)
 
         actorsStrings = []
         for a in explicitActors:
@@ -82,19 +81,28 @@ class OutputGenerator:
         out = re.sub("\{\{actor\}\}", actor, out)
         return out
 
+    # TODO: generateContent and generateMessage seem to be the same...
     def generateContent(self, msg, index):
         out = self.msg_content_template
         out = re.sub("\{\{msg_id\}\}", str(index), out)
-        out = re.sub("\{\{message_header\}\}", "%d. %s [%s -> %s]" % (index, msg.type, msg.sender, msg.receiver), out)
-        out = re.sub("\{\{message_callstack\}\}", '\n'.join(self.call_stack), out)
-        out = re.sub("\{\{message_content\}\}", msg.content, out)
+        out = re.sub("\{\{msg_callstack\}\}", '\n'.join(self.call_stack), out)
+        out = re.sub("\{\{msg_content\}\}", msg.content, out)
+        out = re.sub("\{\{msg_label\}\}", msg.label, out)
+        out = re.sub("\{\{sender\}\}", msg.sender, out)
+        out = re.sub("\{\{full_sender\}\}", msg.full_sender, out)
+        out = re.sub("\{\{receiver\}\}", msg.receiver, out)
+        out = re.sub("\{\{full_receiver\}\}", msg.full_receiver, out)
         return out
 
     def generateMessage(self, msg, index):
         out = self.msg_template
-        out = re.sub("\{\{sender\}\}", msg.sender, out)
         out = re.sub("\{\{msg_id\}\}", str(index), out)
-        out = re.sub("\{\{message_type\}\}", msg.type, out)
+        out = re.sub("\{\{msg_callstack\}\}", '\n'.join(self.call_stack), out)
+        out = re.sub("\{\{msg_content\}\}", msg.content, out)
+        out = re.sub("\{\{msg_label\}\}", msg.label, out)
+        out = re.sub("\{\{sender\}\}", msg.sender, out)
+        out = re.sub("\{\{full_sender\}\}", msg.full_sender, out)
         out = re.sub("\{\{receiver\}\}", msg.receiver, out)
+        out = re.sub("\{\{full_receiver\}\}", msg.full_receiver, out)
         return out
 

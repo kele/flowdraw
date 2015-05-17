@@ -1,25 +1,19 @@
-import re
+from app.configuration_impl import *
 
-
-port_mapping = { \
+# "Bob.*" : "Bob" ## Actors matching 'Bob.*' would be simplified to 'Bob'
+actor_mapping = { \
 } 
 
+# Ignored actors regexps
 ignored_actors = { \
 }
 
-# TODO: throw out to _impl:wq
-def simplifyActor(actor):
-    for regexp, new_port in port_mapping.items():
-        if re.match(regexp, actor):
-            return new_port
-    return actor
+# Ignored message labels regexps
+ignored_messages = { \
+}
 
-def isMsgOk(msg):
-    for regexp in ignored_actors:
-        if re.match(regexp, msg.receiver):
-            return False
-        if re.match(regexp, msg.sender):
-            return False
 
-    return True
-
+configuration = Configuration()
+configuration.actor_mapping = actor_mapping
+configuration.ignored_actors = ignored_actors
+configuration.ignored_messages = ignored_messages

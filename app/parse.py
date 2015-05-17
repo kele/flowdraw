@@ -3,11 +3,13 @@ __author__ = 'kele'
 import re
 
 class Message:
-    def __init__(self, sender, receiver, type, content):
+    def __init__(self, sender, receiver, label, content):
         self.sender = sender
         self.receiver = receiver
-        self.type = type
+        self.label = label 
         self.content = content
+        self.full_receiver = receiver
+        self.full_sender = sender
 
 class Note:
     def __init__(self, content):

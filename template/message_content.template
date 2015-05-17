@@ -1,13 +1,13 @@
 <div msg_id="{{msg_id}}" class="popup" style="display: none;">
     <div class="handle"></div><br>
-    <strong style="padding: 5px;">{{message_header}}</strong>
+    <strong style="padding: 5px;">{{msg_id}}. {{msg_label}} [{{sender}} ({{full_sender}}) -> {{receiver}} ({{full_receiver}})]</strong>
     <br>
     <div class="popup_callstack_button"><strong>Callstack</strong></div>
     <div class="popup_callstack">
-<pre>{{message_callstack}}</pre>
+<pre>{{msg_callstack}}</pre>
     <br>
     </div>
     <div class="popup_content">
-<pre>{{message_content}}</pre>
+<pre>{{msg_content}}</pre>
     </div>
 </div>

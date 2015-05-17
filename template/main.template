@@ -16,12 +16,12 @@
 
         {{actors...}}
 
-        {{message...}}
+        {{msg...}}
 
         var draw = diag.createDrawing();
     </script>
 
-    {{message_content...}}
+    {{msg_content...}}
 
     <div id="legend" style="display: none"></div>
 
