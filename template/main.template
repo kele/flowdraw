@@ -2,10 +2,10 @@
 <head>
     <meta charset='utf-8'/>
     <link rel="stylesheet" type="text/css" href="flowdraw.css" />
-    <script src="js/jquery-2.0.0.min.js"></script> 
-    <script src="js/jquery-ui.min.js"></script> 
-    <script src="js/svg.js"></script> 
-    <script src="js/seqdia.js"></script> 
+    <script src="js/seqdia/jquery-2.0.0.min.js"></script> 
+    <script src="js/seqdia/jquery-ui.min.js"></script> 
+    <script src="js/seqdia/svg.js"></script> 
+    <script src="js/seqdia/seqdia.js"></script> 
 </head>
 <body>
     <p>Help: click on message type to display content. Move popup by dragging the gray handle. Close it by double clicking the handle.</p>

@@ -1,0 +1,3 @@
+[submodule "template/js/seqdia"]
+	path = template/js/seqdia
+	url = https://github.com/kele/seqdia.js.git
