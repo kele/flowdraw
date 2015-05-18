@@ -1,6 +1,7 @@
 from app.parse import *
 from app.configuration_impl import Prettifyier
 from app.configuration import configuration
+from operator import *
 import re
 
 class OutputGenerator:
@@ -33,7 +34,7 @@ class OutputGenerator:
         messages = []
         msg_index = 1
 
-        actors = set()
+        actors = {}
         explicitActors = []
         for p in parsedItems:
             if isinstance(p, Message):
@@ -45,8 +46,13 @@ class OutputGenerator:
 
                 msg_index += 1
 
-                actors.add(p.sender)
-                actors.add(p.receiver)
+                if not p.sender in actors:
+                    actors[p.sender] = 0
+                if not p.receiver in actors:
+                    actors[p.receiver] = 0
+
+                actors[p.sender] += 1
+                actors[p.receiver] += 1
 
             elif isinstance(p, Note):
                 pass # TODO
@@ -69,8 +75,12 @@ class OutputGenerator:
             actors.discard(a)
         for a in explicitActors:
             actorsStrings.append(self.generateActor(a));
+
+        actors = actors.items()
+        actors.sort(key = itemgetter(1))
+        actors.reverse()
         for a in actors:
-            actorsStrings.append(self.generateActor(a));
+            actorsStrings.append(self.generateActor(a[0]));
         main = re.sub("\{\{actors...\}\}", r'\n\t'.join(actorsStrings), main)
 
         return main
